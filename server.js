@@ -2,7 +2,7 @@ const express = require('express')
 const { get } = require('http')
 const app = express()
 
-const logdb = require('./databse')
+const logdb = require('./database')
 
 const morgan = require('morgan')
 const errorhandler = require('errorhandler')
