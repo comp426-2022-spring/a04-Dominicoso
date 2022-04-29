@@ -2,7 +2,7 @@ const express = require('express')
 const { get } = require('http')
 const app = express()
 
-const logdb = require('./database')
+const logdb = require('./database.js')
 
 const morgan = require('morgan')
 const errorhandler = require('errorhandler')
@@ -81,17 +81,19 @@ function flipACoin(call) {
   }
 
 //use morgan for logging
-//let logging = morgan('combined')
+let logging = morgan('combined')
 
 //app.use(logging('common', ))
 
-// app.use(fs.writeFile('./access.log', data, {flag: 'a'}, (err, req, res, next) => {
-//   if (err) {
-//     console.error(err)
-//   } else {
-//     console.log(morgan('combined'))
-//   }
-// }
+app.use(fs.writeFile('./access.log', data,
+ {flag: 'a'}, (err, req, res, next) => {
+  if (err) {
+    console.error(err)
+  } else {
+    console.log(morgan('combined'))
+  }
+}
+))
 
 
 
