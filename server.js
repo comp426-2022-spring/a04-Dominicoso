@@ -128,7 +128,7 @@ app.get('/app/', (req, res) => {
     if (args.debug) {
       app.get('/app/log/access', (req, res) => {
         const stmt = logdb.prepare('SELECT * from accesslog')
-        let row = stmt.all();
+        let row = stmt.get();
         res.status(200).json(console.log(row))
       })
     
