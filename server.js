@@ -86,6 +86,17 @@ function flipACoin(call) {
 
 //let logging = morgan('combined')
 
+if (args.debug) {
+  app.get('/app/log/access/', (req, res) => {
+    res.status(200).json(console.log("insert access log"))
+  })
+
+  app.get('/app/error', (req, res) => {
+    res.status(200).console.error("Error test successful")
+  })
+}
+
+
 
 app.get('/app/', (req, res) => {
     // res.status(200).end('OK')
@@ -123,15 +134,6 @@ app.get('/app/', (req, res) => {
     
     }
 
-if (args.debug) {
-  app.get('/app/log/access/', (req, res) => {
-    res.status(200).json(console.log("insert access log"))
-  })
-
-  app.get('/app/error', (req, res) => {
-    res.status(200).console.error("Error test successful")
-  })
-}
 
 app.get('/app/flip/', (req, res) => {
     res.status(200).json({ 'flip' : coinFlip() })
