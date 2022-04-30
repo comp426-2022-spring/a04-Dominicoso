@@ -128,7 +128,7 @@ app.get('/app/', (req, res) => {
     if (args.debug) {
       app.get('/app/log/access', (req, res) => {
         const stmt = logdb.prepare('SELECT * from accesslog;')
-        res.status(200).json(console.log('\[\{.*(id).*\}\]'))
+        res.status(200).console.log(stmt.get())
       })
     
       app.get('/app/error', (req, res) => {
