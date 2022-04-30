@@ -117,18 +117,9 @@ app.get('/app/', (req, res) => {
     
     if (args.log) {
     
-      // const writeStream = fs.createWriteStream()
+      const WRITESTREAM = fs.createWriteStream('access.log', { flags: 'a' })
     
-      // app.use(logging('common', writeStea))
-    
-      app.use(fs.writeFile('./access.log', data,
-        {flag: 'a'}, (err, req, res, next) => {
-        if (err) {
-          console.error(err)
-        } else {
-          console.log(morgan('combined'))
-        }
-      }))
+      app.use(morgan('combined', { stream: WRITESTREAM}))
     
     }
 
