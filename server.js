@@ -95,7 +95,7 @@ app.get('/app/', (req, res) => {
         res.statusMessage = 'OK';
         res.writeHead( res.statusCode, { 'Content-Type' : 'text/plain' });
         res.end(res.statusCode+ ' ' +res.statusMessage)
-    });
+});
 
     app.use( (req, res, next) => {
       let logdata = {
