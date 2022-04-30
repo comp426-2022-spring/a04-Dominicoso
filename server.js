@@ -87,7 +87,7 @@ if (args.log) {
     
   const WRITESTREAM = fs.createWriteStream(path.join(--dirname, 'access.log'), { flags: 'a' })
 
-  app.use(morgan('common', { stream: WRITESTREAM}))
+  app.use(morgan('combined', { stream: WRITESTREAM}))
 
 }
 
