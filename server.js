@@ -81,20 +81,30 @@ function flipACoin(call) {
   }
 
 //use morgan for logging
+//const ws = fs.createWriteStream()
+
 let logging = morgan('combined')
 
-//app.use(logging('common', ))
+// const logging = (req, res, next) => {
+//   console.log()
+// }
 
-app.use(fs.writeFile('./access.log', data,
- {flag: 'a'}, (err, req, res, next) => {
-  if (err) {
-    console.error(err)
-  } else {
-    console.log(morgan('combined'))
-  }
-}
-))
+// if (args.log) {
 
+//   const writeStream = fs.createWriteStream()
+
+//   app.use(logging('common', ws))
+
+//   app.use(fs.writeFile('./access.log', data,
+//     {flag: 'a'}, (err, req, res, next) => {
+//     if (err) {
+//       console.error(err)
+//     } else {
+//       console.log(morgan('combined'))
+//     }
+//   }))
+
+// }
 
 
 app.get('/app/', (req, res) => {
@@ -110,6 +120,10 @@ app.get('/app/', (req, res) => {
 if (args.debug) {
   app.get('/app/log/access/', (req, res) => {
     res.status(200).json(console.log("insert access log"))
+  })
+
+  app.get('/app/error', (req, res) => {
+    console.error("Error test successful")
   })
 }
 
