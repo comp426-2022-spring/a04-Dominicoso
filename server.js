@@ -87,7 +87,9 @@ function flipACoin(call) {
 
 if (args.debug) {
   app.get('/app/log/access', (req, res) => {
-    res.status(200).json(console.log(logdb.exec(`SELECT * from accesslog`)))
+    const stmt = db.prepare('SELECT * from accesslog')
+    let row = stmt.get();
+    res.status(200).json(console.log(row))
   })
 
   app.get('/app/error', (req, res) => {
