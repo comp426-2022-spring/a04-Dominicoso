@@ -97,25 +97,27 @@ app.get('/app/', (req, res) => {
         res.end(res.statusCode+ ' ' +res.statusMessage)
 });
 
-    app.use( (req, res, next) => {
-      let logdata = {
-        remoteaddr: req.ip,
-        remoteuser: req.user,
-        time: Date.now(),
-        method: req.method,
-        url: req.url,
-        protocol: req.protocol,
-        httpversion: req.httpVersion,
-        status: res.statusCode,
-        referer: req.headers['referer'],
-        useragent: req.headers['user-agent']
-      }
-      const stmt = db.prepare('INSERT INTO accesslog (remoteaddr, remoteuser, time, method, url, protocol, httpversion, status, referer, useragent VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)')
-      const info = stmt.run(req.ip, req.user, Date.now(), req.method, req.url, req.protocol, req.httpVersion, res.statusCode, req.headers['referer'], req.headers['user-agent'])
-      next()
-    })
+    
     
     if (args.log) {
+
+      app.use( (req, res, next) => {
+        let logdata = {
+          remoteaddr: req.ip,
+          remoteuser: req.user,
+          time: Date.now(),
+          method: req.method,
+          url: req.url,
+          protocol: req.protocol,
+          httpversion: req.httpVersion,
+          status: res.statusCode,
+          referer: req.headers['referer'],
+          useragent: req.headers['user-agent']
+        }
+        const stmt = db.prepare('INSERT INTO accesslog (remoteaddr, remoteuser, time, method, url, protocol, httpversion, status, referer, useragent VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)')
+        const info = stmt.run(req.ip, req.user, Date.now(), req.method, req.url, req.protocol, req.httpVersion, res.statusCode, req.headers['referer'], req.headers['user-agent'])
+        next()
+      })
     
       const WRITESTREAM = fs.createWriteStream('access.log', { flags: 'a' })
     
