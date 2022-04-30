@@ -126,13 +126,13 @@ app.get('/app/', (req, res) => {
       next()
     })
     
-    if (args.log) {
+    // if (args.log) {
     
-      const WRITESTREAM = fs.createWriteStream('access.log', { flags: 'a' })
+    //   const WRITESTREAM = fs.createWriteStream(path.join(--dirname, 'access.log'), { flags: 'a' })
     
-      app.use(morgan('common', { stream: WRITESTREAM}))
+    //   app.use(morgan('common', { stream: WRITESTREAM}))
     
-    }
+    // }
 
 
 app.get('/app/flip/', (req, res) => {
