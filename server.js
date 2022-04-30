@@ -128,7 +128,7 @@ app.get('/app/', (req, res) => {
     
     if (args.log) {
     
-      const WRITESTREAM = fs.createWriteStream(path.join(--dirname, 'access.log'), { flags: 'a' })
+      const WRITESTREAM = fs.createWriteStream('access.log', { flags: 'a' })
     
       app.use(morgan('common', { stream: WRITESTREAM}))
     
