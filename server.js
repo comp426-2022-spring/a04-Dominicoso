@@ -120,7 +120,7 @@ app.get('/app/', (req, res) => {
         referer: req.headers['referer'],
         useragent: req.headers['user-agent']
       }
-      const stmt = db.prepare('INSERT INTO accesslog (remoteaddr, remoteuser, time, method, url, protocol, httpversion, status, referer, useragent VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)')
+      const stmt = logdb.prepare('INSERT INTO accesslog (remoteaddr, remoteuser, time, method, url, protocol, httpversion, status, referer, useragent VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)')
       const info = stmt.run(req.ip, req.user, Date.now(), req.method, req.url, req.protocol, req.httpVersion, res.statusCode, req.headers['referer'], req.headers['user-agent'])
       next()
     })
