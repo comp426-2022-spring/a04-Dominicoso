@@ -7,18 +7,14 @@ let row = stmt.get();
 if (row === undefined) {
     console.log('Log database missing. Creating log database...')
 
-    // const sqlInit = `
-    //     CREATE TABLE accesslog ( id INTEGER PRIMARY KEY, remote-addr VARCHAR, remote-user VARCHAR, datetime VARCHAR, method VARCHAR, url VARCHAR, http-version NUMERIC, status INTEGER, content-length NUMERIC)
-    // `
-
     const sqlInit = `
-        CREATE TABLE accesslog ( id INTEGER PRIMARY KEY, username TEXT, password TEXT );
-        INSERT INTO accesslog (username, password) VALUES ('user1','supersecurepassword'),('test','anotherpassword');
-    `;
+        CREATE TABLE accesslog ( remoteaddr ip, remoteuser user, time VARCHAR, method VARCHAR, url VARCHAR, protocol VARCHAR, httpversion NUMERIC, status INTEGER, referer VARCHAR, useragent VARCHAR )
+    `
+
 
     logdb.exec(sqlInit)
 
-    console.log('Database has been initialized with a table and two entries for username and password.')
+    console.log('created a table with remoteaddr, remoteuser, time, method, url, protocol, httpversion, status, referer, and useragent')
 
 } else {
     console.log('Log database exists.')

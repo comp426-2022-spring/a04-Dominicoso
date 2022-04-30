@@ -7,6 +7,7 @@ const logdb = require('./database.js')
 const morgan = require('morgan')
 const errorhandler = require('errorhandler')
 const fs = require('fs')
+const { url } = require('inspector')
 
 const args = require('minimist')(process.argv.slice(2))
 args["port"]
@@ -83,28 +84,7 @@ function flipACoin(call) {
 //use morgan for logging
 //const ws = fs.createWriteStream()
 
-let logging = morgan('combined')
-
-// const logging = (req, res, next) => {
-//   console.log()
-// }
-
-// if (args.log) {
-
-//   const writeStream = fs.createWriteStream()
-
-//   app.use(logging('common', ws))
-
-//   app.use(fs.writeFile('./access.log', data,
-//     {flag: 'a'}, (err, req, res, next) => {
-//     if (err) {
-//       console.error(err)
-//     } else {
-//       console.log(morgan('combined'))
-//     }
-//   }))
-
-// }
+//let logging = morgan('combined')
 
 
 app.get('/app/', (req, res) => {
@@ -116,6 +96,41 @@ app.get('/app/', (req, res) => {
         res.writeHead( res.statusCode, { 'Content-Type' : 'text/plain' });
         res.end(res.statusCode+ ' ' +res.statusMessage)
     });
+
+    app.use( (req, res, next) => {
+      let logdata = {
+        remoteaddr: req.ip,
+        remoteuser: req.user,
+        time: Date.now(),
+        method: req.method,
+        url: req.url,
+        protocol: req.protocol,
+        httpversion: req.httpVersion,
+        status: res.statusCode,
+        referer: req.headers['referer'],
+        useragent: req.headers['user-agent']
+      }
+      const stmt = db.prepare('INSERT INTO accesslog (remoteaddr, remoteuser, time, method, url, protocol, httpversion, status, referer, useragent VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)')
+      const info = stmt.run(req.ip, req.user, Date.now(), req.method, req.url, req.protocol, req.httpVersion, res.statusCode, req.headers['referer'], req.headers['user-agent'])
+      next()
+    })
+    
+    if (args.log) {
+    
+      // const writeStream = fs.createWriteStream()
+    
+      // app.use(logging('common', writeStea))
+    
+      app.use(fs.writeFile('./access.log', data,
+        {flag: 'a'}, (err, req, res, next) => {
+        if (err) {
+          console.error(err)
+        } else {
+          console.log(morgan('combined'))
+        }
+      }))
+    
+    }
 
 if (args.debug) {
   app.get('/app/log/access/', (req, res) => {
