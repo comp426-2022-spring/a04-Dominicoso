@@ -82,9 +82,14 @@ function flipACoin(call) {
   }
 
 //use morgan for logging
-//const ws = fs.createWriteStream()
 
-//let logging = morgan('combined')
+if (args.log) {
+    
+  const WRITESTREAM = fs.createWriteStream(path.join(--dirname, 'access.log'), { flags: 'a' })
+
+  app.use(morgan('common', { stream: WRITESTREAM}))
+
+}
 
 if (args.debug) {
   app.get('/app/log/access/', (req, res) => {
@@ -126,13 +131,7 @@ app.get('/app/', (req, res) => {
       next()
     })
     
-    // if (args.log) {
     
-    //   const WRITESTREAM = fs.createWriteStream(path.join(--dirname, 'access.log'), { flags: 'a' })
-    
-    //   app.use(morgan('common', { stream: WRITESTREAM}))
-    
-    // }
 
 
 app.get('/app/flip/', (req, res) => {
