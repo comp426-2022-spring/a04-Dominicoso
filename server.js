@@ -127,9 +127,9 @@ app.get('/app/', (req, res) => {
     
     if (args.debug) {
       app.get('/app/log/access', (req, res) => {
-        const stmt = logdb.prepare('SELECT * from accesslog')
-        let row = stmt.all();
-        res.status(200).json(console.log(row))
+        // const stmt = logdb.prepare('SELECT * from accesslog')
+        // let row = stmt.all();
+        res.status(200).json(access.log)
       })
     
       app.get('/app/error', (req, res) => {
