@@ -87,7 +87,7 @@ function flipACoin(call) {
 
 if (args.debug) {
   app.get('/app/log/access', (req, res) => {
-    res.status(200).json(console.log("insert access log"))
+    res.status(200).json(console.log(logdb.exec(`SELECT * from accesslog`)))
   })
 
   app.get('/app/error', (req, res) => {
